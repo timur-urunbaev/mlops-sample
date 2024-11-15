@@ -1,0 +1,27 @@
+curl -X 'POST' \
+  'http://127.0.0.1:8000/predict' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "feature_1": 0.5,
+    "feature_2": 1.2,
+    "feature_3": 3.4,
+    "feature_4": 2.5,
+    "feature_5": 0.3,
+    "feature_6": 4.1,
+    "feature_7": 3.9,
+    "feature_8": 1.7,
+    "feature_9": 2.2,
+    "feature_10": 5.0,
+    "feature_11": 0.8,
+    "feature_12": 1.6,
+    "feature_13": 3.3,
+    "feature_14": 2.1,
+    "feature_15": 4.7,
+    "feature_16": 3.0,
+    "feature_17": 1.4,
+    "feature_18": 2.9,
+    "feature_19": 3.5,
+    "feature_20": 0.9,
+    "feature_21": 1.1,
+    "feature_22": 2.8
+  }'
