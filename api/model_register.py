@@ -1,14 +1,16 @@
+import os
+
 import mlflow
 import polars as pl
 
 from imblearn.over_sampling import SMOTE
-
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, classification_report
 from sklearn.preprocessing import LabelEncoder
 
-mlflow.set_tracking_uri(uri='http://localhost:5000')
+os.environ['MLFLOW_TRACKING_URI'] = "http://host.docker.internal:5000"
+mlflow.set_tracking_uri(os.getenv("MLFLOW_TRACKING_URI", "http://localhost:5000"))
 mlflow.set_experiment("Alif.HW")
 
 ratings = pl.read_csv('ml-100k/u.data', separator='\t', has_header=False, new_columns=['user_id', 'item_id', 'rating', 'timestamp'])
@@ -80,3 +82,34 @@ with mlflow.start_run():
     print(f"Accuracy: {accuracy:.2f}")
     print("Classification Report:")
     print(classification_report(y_test, y_pred))
+
+    mlflow.pyfunc.log_model(
+        artifact_path="model",
+        python_model=clf,
+        registered_model_name="movie-classification"
+    )
+
+# from mlflow.tracking import MlflowClient
+# client = MlflowClient()
+
+# # Fetch the latest version of the registered model
+# model_name = "MyModel"
+# latest_versions = client.get_latest_versions(name=model_name, stages=["None"])
+# latest_version = latest_versions[0].version if latest_versions else None
+
+# if latest_version:
+#     # Transition the model to "Production" stage
+#     client.transition_model_version_stage(
+#         name=model_name,
+#         version=latest_version,
+#         stage="Production"
+#     )
+    
+#     # Set alias for the production model
+#     client.set_registered_model_alias(
+#         name=model_name,
+#         alias="prod",
+#         version=latest_version
+#     )
+
+# print(f"Model '{model_name}' version {latest_version} is now in Production stage with alias '@prod'.")

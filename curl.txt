@@ -2,8 +2,8 @@ curl -X 'POST' \
   'http://127.0.0.1:8000/predict' \
   -H 'Content-Type: application/json' \
   -d '{
-    "feature_1": 0.5,
-    "feature_2": 1.2,
+    "feature_1": 12,
+    "feature_2": 1,
     "feature_3": 3.4,
     "feature_4": 2.5,
     "feature_5": 0.3,

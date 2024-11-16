@@ -1,0 +1,24 @@
+services:
+  mlflow:
+    build:
+      context: ./mlflow
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./mlflow:/app
+
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mlflow
+    volumes:
+      - ./api:/app
+
+volumes:
+  mlflow:
+  api:
